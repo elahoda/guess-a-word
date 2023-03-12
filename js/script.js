@@ -69,6 +69,51 @@ const makeGuess = function (inputGuess){
         message.innerText = `You have already guessed that letter`;
     } else {
         guessedLetters.push(inputGuess);
+        showGuesses();
    } console.log(guessedLetters);
+   updateWordInProgress(guessedLetters);
+
 }; 
+
+
+// function to update the display of the guessed letters
+
+const showGuesses = function (input){
+    guessedLettersElement.innerHTML = "";
+    for (const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guessedLettersElement.append(li);
+    }
+};
+
+
+// function to update the "word in progress" and replace the circles
+
+const updateWordInProgress = function (guessedLetters){
+    
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray) {
+        if (guessedLetters.includes(letter)) {
+        revealWord.push(letter.toUpperCase());
+    } else {
+        revealWord.push("⚫");
+    }        
+}
+    console.log(revealWord);
+    wordProgress.innerText = revealWord.join("");
+    checkWin();
+};
+
+// check if word is guessed
+
+const checkWin = function (){
+    //check if won
+    if (word.toUpperCase() === wordProgress.innerText) {
+    message.classList.add("win");
+    message.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!`                      
+    }  
+};
 
